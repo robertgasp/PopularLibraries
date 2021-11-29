@@ -1,18 +1,31 @@
 package com.example.popularlibraries
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.popularlibraries.databinding.FragmentMainBinding
+import moxy.MvpAppCompatFragment
+import moxy.ktx.moxyPresenter
+import moxy.presenter.InjectPresenter
+import moxy.presenter.ProvidePresenter
 
-class MainFragment : Fragment(), MainView {
+class MainFragment : MvpAppCompatFragment(), MainView {
 
     private var _binding: FragmentMainBinding? = null
     private val binding get() = _binding!!
 
-    private val presenter = MainPresenter(this)
+    /*    private val presenter by moxyPresenter { MainPresenter(CountersModel()) }*/
+
+    @InjectPresenter
+    lateinit var presenter : MainPresenter
+
+    @ProvidePresenter
+    fun ProvidePresenter():MainPresenter{
+        return MainPresenter(CountersModel())
+    }
+
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,23 +45,27 @@ class MainFragment : Fragment(), MainView {
         super.onViewCreated(view, savedInstanceState)
 
         btnCounter1.setOnClickListener {
-            presenter.counterClick(0)
+            presenter.counter1Click(0)
         }
 
         btnCounter2.setOnClickListener {
-            presenter.counterClick(1)
+            presenter.counter2Click(1)
         }
 
         btnCounter3.setOnClickListener {
-            presenter.counterClick(2)
+            presenter.counter3Click(2)
         }
     }
 
+    override fun setButton1Text(id: Int, text: String) {
+        binding.btnCounter1.text = text
+    }
 
-    override fun setButtonText(id: Int, text: String) = when (id) {
-        0 -> binding.btnCounter1.text = text
-        1 -> binding.btnCounter2.text = text
-        2 -> binding.btnCounter3.text = text
-        else -> error("Неверный индекс")
+    override fun setButton2Text(id: Int, text: String) {
+        binding.btnCounter2.text = text
+    }
+
+    override fun setButton3Text(id: Int, text: String) {
+        binding.btnCounter3.text = text
     }
 }

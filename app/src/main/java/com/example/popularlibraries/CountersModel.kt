@@ -10,9 +10,9 @@ class CountersModel {
         return counters[index]
     }
 
-    fun increment(@IntRange(from = 0, to = 2) index: Int): Int {
-        counters[index]++
-        return getCurrent(index)
+    fun increment(@IntRange(from = 0, to = 2) id: Int): Int {
+        counters[id]++
+        return getCurrent(id)
     }
 
     fun set(index: Int, value: Int) {
