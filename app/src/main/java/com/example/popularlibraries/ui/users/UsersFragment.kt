@@ -8,8 +8,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.popularlibraries.App
 import com.example.popularlibraries.databinding.FragmentUsersBinding
 import com.example.popularlibraries.domain.GithubUserRepository
+import com.example.popularlibraries.model.GithubUserModel
 import com.example.popularlibraries.ui.base.BackButtonListener
-import com.example.popularlibraries.ui.main.MainView
 import com.example.popularlibraries.ui.users.adapter.UsersAdapter
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
@@ -25,7 +25,7 @@ class UsersFragment : MvpAppCompatFragment(), UsersView, BackButtonListener {
             GithubUserRepository()
         )
     }
-    private val adapter by lazy { UsersAdapter(presenter.usersListPresenter) }
+    private val adapter by lazy { UsersAdapter(presenter::onUserClicked) }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -48,7 +48,7 @@ class UsersFragment : MvpAppCompatFragment(), UsersView, BackButtonListener {
         return true
     }
 
-    override fun updateList() {
-        adapter.notifyDataSetChanged()
+    override fun updateList(users: List<GithubUserModel>) {
+        adapter.submitList(users)
     }
 }

@@ -16,13 +16,13 @@ class SingleUserPresenter(
     private val userRepository: GithubUserRepository
 ) : MvpPresenter<SingleUserView>() {
 
-    private val users = userRepository.getUsers()
     private var user: GithubUserModel? = null
 
     private val backButtonListener: BackButtonListener? = null
 
-    fun setUser(pos: Int) {
-        user = users[pos]
+    fun setUser(userClicked:GithubUserModel) {
+        user = userClicked
+        openFragment()
     }
 
     fun openFragment() {

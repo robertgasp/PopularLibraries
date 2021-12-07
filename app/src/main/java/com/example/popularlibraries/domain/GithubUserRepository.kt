@@ -1,6 +1,9 @@
 package com.example.popularlibraries.domain
 
 import com.example.popularlibraries.model.GithubUserModel
+import io.reactivex.rxjava3.annotations.NonNull
+import io.reactivex.rxjava3.core.Observable
+import java.util.*
 
 class GithubUserRepository {
 
@@ -13,7 +16,7 @@ class GithubUserRepository {
         GithubUserModel("user6"),
     )
 
-    fun getUsers():List<GithubUserModel>{
-        return users
+    fun getUsers(): @NonNull Observable<List<GithubUserModel>> {
+        return Observable.just(users)
     }
 }

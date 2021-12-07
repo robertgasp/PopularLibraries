@@ -3,41 +3,33 @@ package com.example.popularlibraries.ui.users.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.popularlibraries.databinding.ItemUserBinding
 import com.example.popularlibraries.model.GithubUserModel
-import com.example.popularlibraries.ui.users.UserItemView
-import com.example.popularlibraries.ui.users.UserPresenter
 
 class UsersAdapter(
-    private val presenter: UserPresenter.UsersListPresenter
-) : RecyclerView.Adapter<UsersAdapter.UserViewHolder>() {
+    private val itemClickListener: (GithubUserModel)->Unit,
+) : ListAdapter<GithubUserModel, UsersAdapter.UserViewHolder>(UsersItemCallback) {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {
         return UserViewHolder(
             ItemUserBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        ).apply {
-            itemView.setOnClickListener { presenter.itemClickListener(this.pos) }
-        }
+        )
     }
 
     override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
-        presenter.bindView(holder.apply { pos = position })
+        holder.showUser(currentList[position])
     }
 
-    override fun getItemCount(): Int {
-        return presenter.getCount()
-    }
+    inner class UserViewHolder(private val vb: ItemUserBinding) : RecyclerView.ViewHolder(vb.root){
 
-    inner class UserViewHolder(private val vb: ItemUserBinding) : RecyclerView.ViewHolder(vb.root),
-        UserItemView {
-
-        override fun setLogin(login: String) {
-            vb.tvLogin.text = login
+        fun showUser(user: GithubUserModel) {
+            vb.root.setOnClickListener { itemClickListener(user) }
+            vb.tvLogin.text = user.login
         }
 
-        override var pos: Int = -1
     }
 
 
