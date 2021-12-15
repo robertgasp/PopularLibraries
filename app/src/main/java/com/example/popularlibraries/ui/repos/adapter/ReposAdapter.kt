@@ -1,4 +1,4 @@
-package com.example.popularlibraries.ui.main.repos.adapter
+package com.example.popularlibraries.ui.repos.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

@@ -1,4 +1,4 @@
-package com.example.popularlibraries.ui.main.repos.adapter
+package com.example.popularlibraries.ui.repos.adapter
 
 import com.example.popularlibraries.model.GitHubReposModel
 import moxy.MvpView

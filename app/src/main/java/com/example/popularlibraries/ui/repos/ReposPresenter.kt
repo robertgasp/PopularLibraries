@@ -1,47 +1,52 @@
-package com.example.popularlibraries.ui.users
+package com.example.popularlibraries.ui.repos
 
 import android.util.Log
-import com.example.popularlibraries.domain.GithubUserRepository
+import com.example.popularlibraries.domain.GithubReposRepository
+import com.example.popularlibraries.model.GitHubReposModel
 import com.example.popularlibraries.model.GithubUserModel
 import com.example.popularlibraries.screens.AppScreens
-import com.example.popularlibraries.ui.singleUser.SingleUserPresenter
+import com.example.popularlibraries.ui.repos.adapter.RepoView
 import com.github.terrakok.cicerone.Router
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.schedulers.Schedulers
 import moxy.MvpPresenter
 
-class UserPresenter(
+class ReposPresenter(
     private val router: Router,
-    private val userRepository: GithubUserRepository
-) : MvpPresenter<UsersView>() {
+    private val reposRepository: GithubReposRepository,
+    private val reposUrl: String,
+
+    ) : MvpPresenter<RepoView>() {
+
 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
-
-        loadData()
+        loadRepos()
     }
 
-    private fun loadData() {
-        userRepository.getUsers()
+
+    private fun loadRepos() {
+        reposRepository.getRepos(reposUrl)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe { viewState.showLoading() }
-            .subscribe({
-                viewState.updateList(it)
+            .subscribe({ list ->
+                viewState.updateReposList(list)
                 viewState.hideLoading()
             }, { e ->
-                Log.d("Retrofit", "Ошибка пользователя: $e")
+                Log.d("Repos Retrofit Error", "Ошибка запроса репозиториев $e")
                 viewState.hideLoading()
             })
     }
 
-    fun onUserClicked(userModel: GithubUserModel) {
-        router.navigateTo(AppScreens.reposScreen(userModel.reposUrl))
+
+    fun onRepoClick(repos: GitHubReposModel) {
+        router.navigateTo(AppScreens.singleRepoScreen(repos))
     }
+
 
     fun backPressed(): Boolean {
         router.exit()
         return true
     }
-
 }

@@ -6,4 +6,7 @@
     <string name="counter_three">Счетчик 3</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="forks_count">Количество форков:</string>
+    <string name="Repo_creation_date">Дата создания:</string>
+    <string name="repo_last_update">Дата последнего обновления:</string>
 </resources>
