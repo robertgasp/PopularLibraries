@@ -1,21 +1,17 @@
 package com.example.popularlibraries.ui.singleUser
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.popularlibraries.App
-import com.example.popularlibraries.R
 import com.example.popularlibraries.databinding.FragmentSingleUserBinding
-import com.example.popularlibraries.domain.GithubUserRepository
+import com.example.popularlibraries.domain.GithubUserRepositoryImpl
 import com.example.popularlibraries.model.GithubUserModel
+import com.example.popularlibraries.remote.ApiHolder
 import com.example.popularlibraries.ui.base.BackButtonListener
-import com.example.popularlibraries.ui.main.MainPresenter
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
-import moxy.presenter.InjectPresenter
-import moxy.presenter.ProvidePresenter
 
 
 class SingleUserFragment(private val user: GithubUserModel) : MvpAppCompatFragment(),
@@ -27,7 +23,7 @@ class SingleUserFragment(private val user: GithubUserModel) : MvpAppCompatFragme
     private val singleUserPresenter by moxyPresenter {
         SingleUserPresenter(
             App.instance.router,
-            GithubUserRepository()
+            GithubUserRepositoryImpl(ApiHolder.retrofitService)
         )
     }
 
