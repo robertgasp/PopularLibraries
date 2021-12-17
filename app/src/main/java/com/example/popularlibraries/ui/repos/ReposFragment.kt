@@ -9,9 +9,12 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.popularlibraries.App
 import com.example.popularlibraries.databinding.FragmentReposBinding
+import com.example.popularlibraries.db.AppDataBase
 import com.example.popularlibraries.domain.GithubReposRepositoryImpl
 import com.example.popularlibraries.model.GitHubReposModel
+import com.example.popularlibraries.model.GithubUserModel
 import com.example.popularlibraries.remote.ApiHolder
+import com.example.popularlibraries.remote.connection.NetworkStatus
 import com.example.popularlibraries.ui.base.BackButtonListener
 import com.example.popularlibraries.ui.repos.adapter.RepoView
 import com.example.popularlibraries.ui.repos.adapter.ReposAdapter
@@ -27,13 +30,17 @@ class ReposFragment() : MvpAppCompatFragment(), RepoView, BackButtonListener {
     private val repoPresenter by moxyPresenter {
         ReposPresenter(
             App.instance.router,
-            GithubReposRepositoryImpl(ApiHolder.retrofitService),
-            reposUrl!!
+            GithubReposRepositoryImpl(
+                NetworkStatus(requireContext()),
+                ApiHolder.retrofitService,
+                AppDataBase.instance
+            ),
+            userModel
         )
     }
 
-    private val reposUrl by lazy {
-        requireArguments().getString(REPOS_KEY)
+    private val userModel:GithubUserModel by lazy {
+        requireArguments().getSerializable(KEY_USER_MODEL) as GithubUserModel
     }
 
 
@@ -74,10 +81,10 @@ class ReposFragment() : MvpAppCompatFragment(), RepoView, BackButtonListener {
 
     companion object {
 
-        private const val REPOS_KEY = "REPOS_KEY"
+        private const val KEY_USER_MODEL = "KEY_USER_MODEL"
 
-        fun newInstance(reposUrl: String): ReposFragment {
-            return ReposFragment().apply { arguments = bundleOf(REPOS_KEY to reposUrl) }
+        fun newInstance(userModel: GithubUserModel): ReposFragment {
+            return ReposFragment().apply { arguments = bundleOf(KEY_USER_MODEL to userModel) }
         }
     }
 

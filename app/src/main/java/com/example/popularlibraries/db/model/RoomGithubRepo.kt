@@ -16,7 +16,7 @@ data class RoomGithubRepo(
         @PrimaryKey val id:String,
         val name: String,
         val userId:String,
-        val forksCount: Int,
+        val forksCount: String,
         val createdAt: String,
         val updatedAt: String
 )

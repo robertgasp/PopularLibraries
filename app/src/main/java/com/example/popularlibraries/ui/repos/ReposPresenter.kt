@@ -14,8 +14,7 @@ import moxy.MvpPresenter
 class ReposPresenter(
     private val router: Router,
     private val reposRepository: GithubReposRepository,
-    private val reposUrl: String,
-
+    private val userModel: GithubUserModel,
     ) : MvpPresenter<RepoView>() {
 
 
@@ -26,7 +25,7 @@ class ReposPresenter(
 
 
     private fun loadRepos() {
-        reposRepository.getRepos(reposUrl)
+        reposRepository.getRepos(userModel)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe { viewState.showLoading() }

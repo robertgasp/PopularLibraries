@@ -21,8 +21,8 @@ object AppScreens {
         SingleUserFragment(user)
     }
 
-    fun reposScreen(userUrl: String) = FragmentScreen {
-        ReposFragment.newInstance(userUrl)
+    fun reposScreen(userModel:GithubUserModel) = FragmentScreen {
+        ReposFragment.newInstance(userModel)
     }
 
     fun converterJpgToPng() = ActivityScreen {

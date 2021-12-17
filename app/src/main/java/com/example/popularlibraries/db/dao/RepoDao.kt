@@ -5,6 +5,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.example.popularlibraries.db.model.RoomGithubRepo
+import com.example.popularlibraries.model.GitHubReposModel
 
 @Dao
 interface RepoDao {
@@ -12,9 +13,12 @@ interface RepoDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(user:RoomGithubRepo)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insert(users:List<RoomGithubRepo>)
+
     @Query("SELECT * FROM RoomGithubRepo")
     fun getAll():List<RoomGithubRepo>
 
-    @Query("SELECT * FROM RoomGithubRepo WHERE userId =:requestRepoById LIMIT 1" )
-    fun getByUserId(requestRepoById:String):RoomGithubRepo
+    @Query("SELECT * FROM RoomGithubRepo WHERE userId =:requestRepoById" )
+    fun getByUserId(requestRepoById:String):List<GitHubReposModel>
 }
