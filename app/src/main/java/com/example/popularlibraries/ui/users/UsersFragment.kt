@@ -8,9 +8,11 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.popularlibraries.App
 import com.example.popularlibraries.databinding.FragmentUsersBinding
+import com.example.popularlibraries.db.AppDataBase
 import com.example.popularlibraries.domain.GithubUserRepositoryImpl
 import com.example.popularlibraries.model.GithubUserModel
 import com.example.popularlibraries.remote.ApiHolder
+import com.example.popularlibraries.remote.connection.NetworkStatus
 import com.example.popularlibraries.ui.base.BackButtonListener
 import com.example.popularlibraries.ui.imageLoading.GlideImageLoader
 import com.example.popularlibraries.ui.users.adapter.UsersAdapter
@@ -25,10 +27,16 @@ class UsersFragment : MvpAppCompatFragment(), UsersView, BackButtonListener {
     private val presenter by moxyPresenter {
         UserPresenter(
             App.instance.router,
-            GithubUserRepositoryImpl(ApiHolder.retrofitService)
+            GithubUserRepositoryImpl(
+                status,
+                ApiHolder.retrofitService,
+                AppDataBase.instance
+            )
         )
     }
     private val adapter by lazy { UsersAdapter(presenter::onUserClicked, GlideImageLoader()) }
+
+    private val status by lazy { NetworkStatus(requireContext().applicationContext) }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

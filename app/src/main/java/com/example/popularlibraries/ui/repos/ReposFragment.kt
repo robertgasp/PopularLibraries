@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.popularlibraries.App
@@ -18,7 +19,7 @@ import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 
 
-class ReposFragment(reposUrl: String) : MvpAppCompatFragment(), RepoView, BackButtonListener {
+class ReposFragment() : MvpAppCompatFragment(), RepoView, BackButtonListener {
 
     private var _binding: FragmentReposBinding? = null
     private val binding get() = _binding!!
@@ -27,8 +28,12 @@ class ReposFragment(reposUrl: String) : MvpAppCompatFragment(), RepoView, BackBu
         ReposPresenter(
             App.instance.router,
             GithubReposRepositoryImpl(ApiHolder.retrofitService),
-            reposUrl
+            reposUrl!!
         )
+    }
+
+    private val reposUrl by lazy {
+        requireArguments().getString(REPOS_KEY)
     }
 
 
@@ -66,5 +71,15 @@ class ReposFragment(reposUrl: String) : MvpAppCompatFragment(), RepoView, BackBu
         repoPresenter.backPressed()
         return true
     }
+
+    companion object {
+
+        private const val REPOS_KEY = "REPOS_KEY"
+
+        fun newInstance(reposUrl: String): ReposFragment {
+            return ReposFragment().apply { arguments = bundleOf(REPOS_KEY to reposUrl) }
+        }
+    }
+
 
 }

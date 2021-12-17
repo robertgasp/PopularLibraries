@@ -34,7 +34,7 @@ class SingleRepoFragment(
         repoTitle.text = singleRepo.name
         singleRepoForksCount.text = singleRepo.forksCount.toString()
         singleRepoCreationDate.text = singleRepo.createdAt
-        singleRepoLastUpdateData.text = singleRepo.updated_at
+        singleRepoLastUpdateData.text = singleRepo.updatedAt
     }
 
 }

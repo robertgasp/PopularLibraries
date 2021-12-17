@@ -13,6 +13,6 @@ class GitHubReposModel(
     val createdAt: String,
 
     @Expose
-    val updated_at: String
+    val updatedAt: String
 ) {
 }

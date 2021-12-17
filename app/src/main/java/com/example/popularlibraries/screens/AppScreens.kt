@@ -21,15 +21,15 @@ object AppScreens {
         SingleUserFragment(user)
     }
 
-    fun reposScreen(userUrl:String) = FragmentScreen{
-        ReposFragment(userUrl)
+    fun reposScreen(userUrl: String) = FragmentScreen {
+        ReposFragment.newInstance(userUrl)
     }
 
     fun converterJpgToPng() = ActivityScreen {
         Intent(it, ConverterJpegToPngActivity::class.java)
     }
 
-    fun singleRepoScreen(singleRepo:GitHubReposModel) = FragmentScreen{
+    fun singleRepoScreen(singleRepo: GitHubReposModel) = FragmentScreen {
         SingleRepoFragment(singleRepo)
     }
 }

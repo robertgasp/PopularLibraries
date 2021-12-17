@@ -20,12 +20,12 @@ class SingleUserFragment(private val user: GithubUserModel) : MvpAppCompatFragme
     private var _binding: FragmentSingleUserBinding? = null
     private val binding get() = _binding!!
 
-    private val singleUserPresenter by moxyPresenter {
+/*    private val singleUserPresenter by moxyPresenter {
         SingleUserPresenter(
             App.instance.router,
-            GithubUserRepositoryImpl(ApiHolder.retrofitService)
+            //GithubUserRepositoryImpl(ApiHolder.retrofitService)
         )
-    }
+    }*/
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,7 +39,7 @@ class SingleUserFragment(private val user: GithubUserModel) : MvpAppCompatFragme
         super.onViewCreated(view, savedInstanceState)
         binding.singleUserId.text = user.login
 
-        singleUserPresenter.backPressed()
+       // singleUserPresenter.backPressed()
     }
 
     override fun getLoginFromUsersList() {
@@ -47,7 +47,7 @@ class SingleUserFragment(private val user: GithubUserModel) : MvpAppCompatFragme
     }
 
     override fun backPressed(): Boolean {
-        singleUserPresenter.backPressed()
+      //  singleUserPresenter.backPressed()
         return true
     }
 }
