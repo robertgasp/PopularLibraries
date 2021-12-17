@@ -75,5 +75,6 @@ dependencies {
     //Room
     implementation 'androidx.room:room-runtime:2.4.0'
     kapt 'androidx.room:room-compiler:2.4.0'
+    implementation("android.room:room-rxjava3:2.9.0")
 
 }

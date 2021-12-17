@@ -28,7 +28,7 @@ abstract class AppDataBase : RoomDatabase() {
 
         val instance by lazy {
             Room.databaseBuilder(App.instance, AppDataBase::class.java, DB_NAME)
-                .fallbackToDestructiveMigration()
+                //.fallbackToDestructiveMigration()
                 .build()
         }
 
