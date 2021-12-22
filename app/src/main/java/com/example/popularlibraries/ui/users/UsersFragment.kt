@@ -25,18 +25,11 @@ class UsersFragment : MvpAppCompatFragment(), UsersView, BackButtonListener {
     private val binding get() = _binding!!
 
     private val presenter by moxyPresenter {
-        UserPresenter(
-            App.instance.router,
-            GithubUserRepositoryImpl(
-                status,
-                ApiHolder.retrofitService,
-                AppDataBase.instance
-            )
-        )
+        App.instance.appComponent.usersPresenter()
     }
     private val adapter by lazy { UsersAdapter(presenter::onUserClicked, GlideImageLoader()) }
 
-    private val status by lazy { NetworkStatus(requireContext().applicationContext) }
+    //private val status by lazy { NetworkStatus(requireContext().applicationContext) }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

@@ -28,18 +28,12 @@ class ReposFragment() : MvpAppCompatFragment(), RepoView, BackButtonListener {
     private val binding get() = _binding!!
 
     private val repoPresenter by moxyPresenter {
-        ReposPresenter(
-            App.instance.router,
-            GithubReposRepositoryImpl(
-                NetworkStatus(requireContext()),
-                ApiHolder.retrofitService,
-                AppDataBase.instance
-            ),
-            userModel
-        )
+        App.instance.appComponent.reposPresenter().apply {
+            userModel = this@ReposFragment.userModel
+        }
     }
 
-    private val userModel:GithubUserModel by lazy {
+    private val userModel: GithubUserModel by lazy {
         requireArguments().getSerializable(KEY_USER_MODEL) as GithubUserModel
     }
 

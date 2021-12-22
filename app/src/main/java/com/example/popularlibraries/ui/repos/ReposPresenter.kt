@@ -10,13 +10,15 @@ import com.github.terrakok.cicerone.Router
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.schedulers.Schedulers
 import moxy.MvpPresenter
+import javax.inject.Inject
 
-class ReposPresenter(
+class ReposPresenter @Inject constructor(
     private val router: Router,
     private val reposRepository: GithubReposRepository,
-    private val userModel: GithubUserModel,
-    ) : MvpPresenter<RepoView>() {
+    private val appScreens: AppScreens
+) : MvpPresenter<RepoView>() {
 
+    lateinit var userModel: GithubUserModel
 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
@@ -40,7 +42,8 @@ class ReposPresenter(
 
 
     fun onRepoClick(repos: GitHubReposModel) {
-        router.navigateTo(AppScreens.singleRepoScreen(repos))
+        //router.navigateTo(AppScreens.singleRepoScreen(repos))
+        router.navigateTo(appScreens.singleRepoScreen(repos))
     }
 
 

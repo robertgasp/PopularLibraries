@@ -5,8 +5,9 @@ import com.example.popularlibraries.db.model.RoomGithubUser
 import com.example.popularlibraries.model.GithubUserModel
 import io.reactivex.rxjava3.annotations.NonNull
 import io.reactivex.rxjava3.core.Single
+import javax.inject.Inject
 
-class RoomGithubUserCache(private val db: AppDataBase) {
+class RoomGithubUserCache @Inject constructor(private val db: AppDataBase) {
 
     fun insert(users: List<GithubUserModel>): Single<List<GithubUserModel>> {
 

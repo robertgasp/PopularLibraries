@@ -75,6 +75,13 @@ dependencies {
     //Room
     implementation 'androidx.room:room-runtime:2.4.0'
     kapt 'androidx.room:room-compiler:2.4.0'
-    implementation("android.room:room-rxjava3:2.9.0")
+    implementation 'android.room:room-rxjava3:2.4.0'
+    kapt("org.xerial:sqlite-jdbc:3.36.0")
+    implementation "androidx.room:room-guava:2.4.0"
+
+
+    // Dagger
+    implementation 'com.google.dagger:dagger:2.39.1'
+    kapt 'com.google.dagger:dagger-compiler:2.39.1'
 
 }
