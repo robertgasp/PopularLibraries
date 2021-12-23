@@ -5,17 +5,21 @@ import com.github.terrakok.cicerone.Router
 import com.github.terrakok.cicerone.androidx.AppScreen
 import moxy.InjectViewState
 import moxy.MvpPresenter
+import javax.inject.Inject
 
 @InjectViewState
-class MainPresenter(private val router: Router) : MvpPresenter<MainView>() {
+class MainPresenter @Inject constructor(
+    private val router: Router,
+    private val appScreens: AppScreens
+) : MvpPresenter<MainView>() {
 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
 
-        router.replaceScreen(AppScreens.usersScreen())
+        router.replaceScreen(appScreens.usersScreen())
     }
 
-    fun backPressed(){
+    fun backPressed() {
         router.exit()
     }
 }

@@ -7,9 +7,10 @@ import com.example.popularlibraries.model.GithubUserModel
 import com.example.popularlibraries.remote.RetrofitService
 import com.example.popularlibraries.remote.connection.NetworkStatus
 import io.reactivex.rxjava3.core.Single
+import javax.inject.Inject
 
 
-class GithubUserRepositoryImpl(
+class GithubUserRepositoryImpl @Inject constructor(
     private val networkStatus: NetworkStatus,
     private val retrofitService: RetrofitService,
     private val usersCache: RoomGithubUserCache

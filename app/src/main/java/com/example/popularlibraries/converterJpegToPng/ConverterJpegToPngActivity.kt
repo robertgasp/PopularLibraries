@@ -1,14 +1,12 @@
 package com.example.popularlibraries.converterJpegToPng
 
 import android.Manifest
-import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
-import com.example.popularlibraries.R
 import com.example.popularlibraries.databinding.ActivityConverterJpegToPngBinding
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.Disposable
@@ -31,7 +29,7 @@ class ConverterJpegToPngActivity : AppCompatActivity() {
             }
         }
 
-    private val permision = registerForActivityResult(ActivityResultContracts.RequestPermission()) {
+    private val permission = registerForActivityResult(ActivityResultContracts.RequestPermission()) {
         when {
             it -> {
                 convertJpeg.launch(arrayOf("image/*"))
@@ -55,7 +53,7 @@ class ConverterJpegToPngActivity : AppCompatActivity() {
             if (shouldShowRequestPermissionRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
                 Log.d("Deny", "No permission Manifest.permission.WRITE_EXTERNAL_STORAGE")
             } else {
-                permision.launch(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                permission.launch(Manifest.permission.WRITE_EXTERNAL_STORAGE)
             }
         }
 

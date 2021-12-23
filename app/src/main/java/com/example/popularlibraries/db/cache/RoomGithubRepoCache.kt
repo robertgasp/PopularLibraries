@@ -8,10 +8,11 @@ import com.example.popularlibraries.model.GithubUserModel
 import com.example.popularlibraries.remote.ApiHolder.retrofitService
 import io.reactivex.rxjava3.annotations.NonNull
 import io.reactivex.rxjava3.core.Single
+import javax.inject.Inject
 
-class RoomGithubRepoCache(private val db:AppDataBase) {
+class RoomGithubRepoCache @Inject constructor(private val db: AppDataBase) {
 
-    fun insert(repos:List<GitHubReposModel>):Single<List<GitHubReposModel>>{
+    fun insert(repos: List<GitHubReposModel>): Single<List<GitHubReposModel>> {
         val dbRepos = repos.map {
             RoomGithubRepo(
                 it.id,
@@ -25,14 +26,14 @@ class RoomGithubRepoCache(private val db:AppDataBase) {
         return db.repositoryDao.insert(dbRepos).toSingle { repos }
     }
 
-    fun getReposOfTheSingleUser(userModel: GithubUserModel):Single<List<GitHubReposModel>> {
-       return db.repositoryDao.getByUserId(userModel.id)
+    fun getReposOfTheSingleUser(userModel: GithubUserModel): Single<List<GitHubReposModel>> {
+        return db.repositoryDao.getByUserId(userModel.id)
             .map {
-                it.map {singleRepo->
+                it.map { singleRepo ->
                     GitHubReposModel(
                         singleRepo.id,
                         singleRepo.name,
-                        GithubRepoOwner(singleRepo.userId),
+                        GithubRepoOwner(singleRepo.userId),//вот здесь я никак не могу передать singleRepo.userId
                         singleRepo.forksCount,
                         singleRepo.createdAt,
                         singleRepo.updatedAt
@@ -40,7 +41,6 @@ class RoomGithubRepoCache(private val db:AppDataBase) {
                 }
             }
     }
-
 
 
 }

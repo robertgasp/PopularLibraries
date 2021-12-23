@@ -5,5 +5,5 @@ import com.example.popularlibraries.model.GithubUserModel
 import io.reactivex.rxjava3.core.Single
 
 interface GithubReposRepository {
-    fun getRepos(login: GithubUserModel): Single<List<GitHubReposModel>>
+    fun getRepos(user: GithubUserModel): Single<List<GitHubReposModel>>
 }

@@ -11,8 +11,9 @@ import java.io.FileOutputStream
 import java.lang.Exception
 import java.util.*
 import java.util.concurrent.TimeUnit
+import javax.inject.Inject
 
-class ConverterJpegToPng(
+class ConverterJpegToPng @Inject constructor(
     private val context: Context
 ) {
 
