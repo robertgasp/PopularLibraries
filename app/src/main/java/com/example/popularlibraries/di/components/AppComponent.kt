@@ -27,5 +27,4 @@ interface AppComponent {
     fun reposPresenter(): ReposPresenter
 
     fun inject(mainActivity: MainActivity)
-
 }

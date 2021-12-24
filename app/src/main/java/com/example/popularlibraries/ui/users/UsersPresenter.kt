@@ -45,5 +45,4 @@ class UsersPresenter @Inject constructor(
         router.exit()
         return true
     }
-
 }
