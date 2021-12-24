@@ -35,7 +35,7 @@ class MainActivity : MvpAppCompatActivity(R.layout.activity_main), MainView {
     lateinit var navigatorHolder: NavigatorHolder
 
     @Inject
-    lateinit var router:Router
+    lateinit var router: Router
 
     @Inject
     lateinit var appScreens: AppScreens

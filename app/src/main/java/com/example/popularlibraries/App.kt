@@ -3,26 +3,47 @@ package com.example.popularlibraries
 import android.app.Application
 import com.example.popularlibraries.di.components.AppComponent
 import com.example.popularlibraries.di.components.DaggerAppComponent
-import com.example.popularlibraries.di.modules.ContextModule
-import com.github.terrakok.cicerone.Cicerone
-import com.github.terrakok.cicerone.Router
-import dagger.internal.DaggerCollections
+import com.example.popularlibraries.di.components.GithubReposSubcomponent
+import com.example.popularlibraries.di.components.GithubUsersSubcomponent
+import com.example.popularlibraries.di.modules.AppModule
+import com.example.popularlibraries.di.scope.containers.ReposScopeContainer
+import com.example.popularlibraries.di.scope.containers.UsersScopeContainer
 
-class App : Application() {
+class App : Application(), UsersScopeContainer, ReposScopeContainer {
 
-    val appComponent:AppComponent by lazy {
+    val appComponent: AppComponent by lazy {
         DaggerAppComponent.build()
-            .contextModule(ContextModule(this))
+            .appModule(AppModule(this))
             .build()
     }
+
+    var usersSubcomponent: GithubUsersSubcomponent? = null
+    var reposSubcomponent: GithubReposSubcomponent? = null
 
     override fun onCreate() {
         super.onCreate()
         _instance = this
     }
 
-    companion object{
-        private var _instance:App?=null
+    override fun initUsersSubcomponent() = appComponent.usersSubcomponent().also {
+        usersSubcomponent = it
+    }
+
+    override fun destroyUsersSubcomponent() {
+        usersSubcomponent = null
+    }
+
+    override fun initReposSubcomponent() =
+        appComponent.usersSubcomponent().reposSubcomponent().also {
+            reposSubcomponent = it
+        }
+
+    override fun destroyReposSubcomponent() {
+        reposSubcomponent = null
+    }
+
+    companion object {
+        private var _instance: App? = null
         val instance
             get() = _instance!!
     }

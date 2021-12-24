@@ -11,14 +11,14 @@ import javax.inject.Inject
 class GithubReposRepositoryImpl @Inject constructor(
     private val networkStatus: NetworkStatus,
     private val retrofitService: RetrofitService,
-    private val repoCache:RoomGithubRepoCache
+    private val repoCache: RoomGithubRepoCache
 ) : GithubReposRepository {
 
     override fun getRepos(user: GithubUserModel): Single<List<GitHubReposModel>> {
         return if (networkStatus.isOnline()) {
             retrofitService.getRepos(user.reposUrl)
                 .flatMap(repoCache::insert)
-            } else {
+        } else {
             repoCache.getReposOfTheSingleUser(user)
         }
     }

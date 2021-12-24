@@ -28,9 +28,12 @@ class ReposFragment() : MvpAppCompatFragment(), RepoView, BackButtonListener {
     private val binding get() = _binding!!
 
     private val repoPresenter by moxyPresenter {
-        App.instance.appComponent.reposPresenter().apply {
+        App.instance.initReposSubcomponent()
+        App.instance.reposSubcomponent?.reposPresenterFactory()?.presenter(userModel)!!
+
+/*        App.instance.appComponent.reposPresenter().apply {
             userModel = this@ReposFragment.userModel
-        }
+        }*/
     }
 
     private val userModel: GithubUserModel by lazy {

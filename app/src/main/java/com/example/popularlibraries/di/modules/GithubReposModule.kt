@@ -1,8 +1,11 @@
 package com.example.popularlibraries.di.modules
 
+import com.example.popularlibraries.App
 import com.example.popularlibraries.db.AppDataBase
 import com.example.popularlibraries.db.cache.RoomGithubRepoCache
 import com.example.popularlibraries.db.cache.RoomGithubUserCache
+import com.example.popularlibraries.di.scope.RepositoryScope
+import com.example.popularlibraries.di.scope.containers.ReposScopeContainer
 import com.example.popularlibraries.domain.GithubReposRepository
 import com.example.popularlibraries.domain.GithubReposRepositoryImpl
 import com.example.popularlibraries.domain.GithubUserRepository
@@ -13,32 +16,26 @@ import com.example.popularlibraries.remote.RetrofitService
 import com.example.popularlibraries.remote.connection.NetworkStatus
 import com.github.terrakok.cicerone.androidx.ActivityScreen
 import com.github.terrakok.cicerone.androidx.FragmentScreen
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
 
 @Module
-class RepositoryModule {
+abstract class GithubReposModule {
 
-    @Singleton
-    @Provides
-    fun usersRepo(
-        networkStatus: NetworkStatus,
-        retrofitService: RetrofitService,
-        dataBase: RoomGithubUserCache
-    ): GithubUserRepository {
-        return GithubUserRepositoryImpl(networkStatus, retrofitService, dataBase)
+
+    @RepositoryScope
+    @Binds
+    abstract fun bindReposRepo(impl: GithubReposRepositoryImpl): GithubReposRepository
+
+    companion object {
+        @RepositoryScope
+        @Provides
+        fun repoCache(db: AppDataBase): RoomGithubRepoCache = RoomGithubRepoCache(db)
+
+        @RepositoryScope
+        @Provides
+        fun scopeContainer(app: App): ReposScopeContainer = app
     }
-
-    @Singleton
-    @Provides
-    fun reposRepo(
-        networkStatus: NetworkStatus,
-        retrofitService: RetrofitService,
-        dataBase: RoomGithubRepoCache
-    ): GithubReposRepository {
-        return GithubReposRepositoryImpl(networkStatus, retrofitService, dataBase)
-    }
-
-
 }

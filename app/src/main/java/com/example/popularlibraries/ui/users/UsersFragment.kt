@@ -25,7 +25,8 @@ class UsersFragment : MvpAppCompatFragment(), UsersView, BackButtonListener {
     private val binding get() = _binding!!
 
     private val presenter by moxyPresenter {
-        App.instance.appComponent.usersPresenter()
+        App.instance.initUsersSubcomponent()
+        App.instance.usersSubcomponent?.provideUsersPresenter()!!
     }
     private val adapter by lazy { UsersAdapter(presenter::onUserClicked, GlideImageLoader()) }
 

@@ -12,7 +12,7 @@ import javax.inject.Singleton
 private const val DB_NAME = "database.db"
 
 @Module
-class CacheModule {
+class DBModule {
 
     @Singleton
     @Provides
@@ -21,15 +21,5 @@ class CacheModule {
             .build()
     }
 
-    @Singleton
-    @Provides
-    fun userCache(db: AppDataBase): RoomGithubUserCache {
-        return RoomGithubUserCache(db)
-    }
 
-    @Singleton
-    @Provides
-    fun repoCache(db: AppDataBase): RoomGithubRepoCache {
-        return RoomGithubRepoCache(db)
-    }
 }
